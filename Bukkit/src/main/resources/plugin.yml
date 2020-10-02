@@ -1,0 +1,4 @@
+name: Inferius
+version: ${project.version}
+main: dev.notcacha.inferius.bukkit.Inferius
+api-version: 1.16
