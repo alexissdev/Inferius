@@ -4,6 +4,7 @@ import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 import dev.morphia.annotations.IndexOptions;
 import dev.morphia.annotations.Indexed;
+import dev.notcacha.inferius.bukkit.exception.BuildException;
 
 @Entity(value = "Users", noClassnameStored = true)
 public class InferiusUser implements User {
@@ -76,6 +77,12 @@ public class InferiusUser implements User {
 
         @Override
         public User build() {
+            if (id == null) {
+                throw new BuildException(
+                        "An error occurred when trying to create the User object, the id is null!"
+                );
+            }
+
             return new InferiusUser(id, name, language);
         }
     }

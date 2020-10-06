@@ -4,9 +4,10 @@ import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 import dev.morphia.annotations.IndexOptions;
 import dev.morphia.annotations.Indexed;
+import dev.notcacha.inferius.bukkit.exception.BuildException;
+import dev.notcacha.inferius.bukkit.punishment.issuer.Issuer;
+import dev.notcacha.inferius.bukkit.punishment.punished.Punished;
 import dev.notcacha.inferius.bukkit.punishment.type.PunishmentType;
-
-import java.util.UUID;
 
 
 @Entity(value = "Punishments", noClassnameStored = true)
@@ -16,11 +17,9 @@ public class InferiusPunishment implements Punishment {
     @Indexed(options = @IndexOptions(unique = true))
     private final String id;
 
-    private final UUID issuerId;
-    private final String issuerName;
-    private final UUID punishedId;
-    private final String punishedName;
-    private final String punishedIp;
+    private final Issuer issuer;
+    private final Punished punished;
+    private final String reason;
     private final PunishmentType type;
     private final long endTime;
     private boolean active;
@@ -30,28 +29,24 @@ public class InferiusPunishment implements Punishment {
      */
 
     public InferiusPunishment() {
-        this.issuerId = null;
-        this.issuerName = null;
-        this.punishedId = null;
-        this.punishedName = null;
-        this.punishedIp = null;
+        this.issuer = null;
+        this.punished = null;
+        this.reason = null;
         this.type = null;
         this.endTime = -1;
         this.id = null;
         this.active = false;
     }
 
-    public InferiusPunishment(UUID issuerId, String issuerName, UUID punishedId,
-                              String punishedName, String punishedIp, PunishmentType type, long endTime, boolean active, String id) {
-        this.issuerId = issuerId;
-        this.issuerName = issuerName;
-        this.punishedId = punishedId;
-        this.punishedName = punishedName;
-        this.punishedIp = punishedIp;
+    public InferiusPunishment(String id, Issuer issuer, Punished punished, String reason,
+                              PunishmentType type, long endTime, boolean active) {
+        this.id = id;
+        this.issuer = issuer;
+        this.punished = punished;
+        this.reason = reason;
         this.type = type;
         this.endTime = endTime;
-        this.id = id;
-        this.active = true;
+        this.active = active;
     }
 
     @Override
@@ -61,28 +56,18 @@ public class InferiusPunishment implements Punishment {
 
 
     @Override
-    public UUID getIssuerId() {
-        return issuerId;
+    public Issuer getIssuer() {
+        return this.issuer;
     }
 
     @Override
-    public String getIssuerName() {
-        return issuerName;
+    public Punished getPunished() {
+        return this.punished;
     }
 
     @Override
-    public UUID getPunishedId() {
-        return punishedId;
-    }
-
-    @Override
-    public String getPunishedName() {
-        return punishedName;
-    }
-
-    @Override
-    public String getPunishedIp() {
-        return punishedIp;
+    public String getReason() {
+        return this.reason;
     }
 
     @Override
@@ -109,52 +94,38 @@ public class InferiusPunishment implements Punishment {
 
         private final String id;
 
-        private UUID issuerId;
-        private String issuerName;
-        private UUID punishedId;
-        private String punishedName;
-        private String punishedIp;
+        private Issuer issuer;
+        private Punished punished;
+        private String reason;
         private PunishmentType type;
         private long endTime;
 
         public Builder(String id) {
             this.id = id;
-            this.issuerId = null;
-            this.issuerName = null;
-            this.punishedId = null;
-            this.punishedName = null;
-            this.punishedIp = null;
+            this.issuer = null;
+            this.punished = null;
+            this.reason = null;
             this.type = null;
             this.endTime = -1;
         }
 
+
         @Override
-        public Punishment.Builder setIssuerId(UUID id) {
-            this.issuerId = id;
+        public Punishment.Builder setIssuer(Issuer issuer) {
+            this.issuer = issuer;
             return this;
         }
 
         @Override
-        public Punishment.Builder setIssuerName(String name) {
-            this.issuerName = name;
+        public Punishment.Builder setPunished(Punished punished) {
+            this.punished = punished;
             return this;
         }
 
         @Override
-        public Punishment.Builder setPunishedId(UUID id) {
-            this.punishedId = id;
-            return this;
-        }
+        public Punishment.Builder setReason(String reason) {
+            this.reason = (reason != null) ? reason : Punishment.DEFAULT_REASON;
 
-        @Override
-        public Punishment.Builder setPunishedName(String name) {
-            this.punishedName = name;
-            return this;
-        }
-
-        @Override
-        public Punishment.Builder setPunishedIp(String ip) {
-            this.punishedIp = ip;
             return this;
         }
 
@@ -172,16 +143,21 @@ public class InferiusPunishment implements Punishment {
 
         @Override
         public Punishment build() {
+            if (issuer == null || punished == null) {
+                throw new BuildException(
+                        "Please check the instances of 'issuer' and 'punished' that some are returning a null value!"
+                );
+            }
+
             return new InferiusPunishment(
-                    issuerId,
-                    issuerName,
-                    punishedId,
-                    punishedName,
-                    punishedIp,
+                    id,
+                    issuer,
+                    punished,
+                    reason,
                     type,
                     endTime,
-                    true,
-                    id);
+                    true
+                    );
         }
     }
 }

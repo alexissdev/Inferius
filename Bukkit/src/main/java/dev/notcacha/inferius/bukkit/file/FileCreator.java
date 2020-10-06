@@ -35,15 +35,15 @@ public final class FileCreator extends YamlConfiguration {
             if (file.exists()) {
                 this.load(file);
                 this.save(file);
-            } else {
-                if (this.plugin.getResource(this.fileName) != null) {
-                    this.plugin.saveResource(this.fileName, false);
-                } else {
-                    this.save(file);
-                }
-
-                this.load(file);
+                return;
             }
+            if (this.plugin.getResource(this.fileName) != null) {
+                this.plugin.saveResource(this.fileName, false);
+            } else {
+                this.save(file);
+            }
+
+            this.load(file);
         } catch (IOException | InvalidConfigurationException exception) {
             this.plugin.getLogger().log(Level.SEVERE, "Creation of Configuration '" + this.fileName + "' failed.", exception);
         }

@@ -1,41 +1,36 @@
 package dev.notcacha.inferius.bukkit.punishment;
 
+import dev.notcacha.inferius.buildable.Buildable;
+import dev.notcacha.inferius.bukkit.punishment.issuer.Issuer;
+import dev.notcacha.inferius.bukkit.punishment.punished.Punished;
 import dev.notcacha.inferius.bukkit.punishment.type.PunishmentType;
 import dev.notcacha.inferius.model.Model;
-
-import java.util.UUID;
 
 public interface Punishment extends Model {
 
     /**
-     * @return the {@link UUID} of the punishment author
+     * @return default reason from punishment
      */
 
-    UUID getIssuerId();
+    String DEFAULT_REASON = "None";
 
     /**
-     * @return the name of the punishment author
+     * @return an object {@link Issuer} with all the information of the issuer
      */
 
-    String getIssuerName();
+    Issuer getIssuer();
 
     /**
-     * @return the {@link UUID} of the author who received the punishment
+     * @return an object {@link Punished} with all the punished information
      */
 
-    UUID getPunishedId();
+    Punished getPunished();
 
     /**
-     * @return the name of the author who received the punishment
+     * @return reason from punishment has been set
      */
 
-    String getPunishedName();
-
-    /**
-     * @return the ip of the author who received the punishment
-     */
-
-    String getPunishedIp();
+    String getReason();
 
     /**
      * @return {@link PunishmentType} from this punishment
@@ -65,59 +60,43 @@ public interface Punishment extends Model {
      * @return this punishment is permanent
      */
 
-    default boolean hasPermanent() {
+    default boolean isPermanent() {
         return getEndTime() == -1;
     }
 
-    interface Builder {
+    interface Builder extends Buildable<Punishment> {
 
         /**
-         * Set issuerId, {@param id} has been set
+         * Set {@link Issuer} from {@link Punishment}
          */
 
-        Builder setIssuerId(UUID id);
+        Builder setIssuer(Issuer issuer);
 
         /**
-         * Set issuerName, {@param name} has been set
+         * Set {@link Punished} from {@link Punishment}
          */
 
-        Builder setIssuerName(String name);
+        Builder setPunished(Punished punished);
 
         /**
-         * Set punishedId, {@param id} has been set
+         * Set reason from {@link Punishment}
+         *
+         * @param reason has been set
          */
 
-        Builder setPunishedId(UUID id);
+        Builder setReason(String reason);
 
         /**
-         * Set punishedName, {@param name} has been set
-         */
-
-        Builder setPunishedName(String name);
-
-        /**
-         * Set punishedIp, {@param ip} has been set
-         */
-
-        Builder setPunishedIp(String ip);
-
-        /**
-         * Set type from punishment, {@param type} has been set
+         * Set type from {@link Punishment}, {@param type} has been set
          */
 
         Builder setType(PunishmentType type);
 
         /**
-         * Set end time from punishment, {@param endTime} has been set
+         * Set end time from {@link Punishment}, {@param endTime} has been set
          */
 
         Builder setEndTime(long endTime);
-
-        /**
-         * @return a new object {@link Punishment} with all previous properties set
-         */
-
-        Punishment build();
 
 
     }

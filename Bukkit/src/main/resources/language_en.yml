@@ -1,0 +1,8 @@
+general:
+  no-permission: "&cYou no have permissions to execute this command!"
+  target-offline: "&cThe player %target_name% if offline!"
+  only-player: "&cThis command can only be executed by a player!"
+
+flow:
+  unknown-sender: "&cUnknown command sender!"
+  invalid-command: "&cInvalid command!"

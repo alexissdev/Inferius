@@ -25,7 +25,6 @@ public class BaseMongoConnection implements MongoConnection {
         this.open();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void open() {
         client = new MongoClient(

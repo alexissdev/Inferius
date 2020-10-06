@@ -29,11 +29,13 @@ public class PunishmentStorage implements Storage<Punishment> {
     }
 
     @Override
+    @Deprecated
     public void load(String id) {
         plugin.getLogger().log(Level.SEVERE, "This method is totally useless in this implementation!");
     }
 
     @Override
+    @Deprecated
     public void loadAll() {
         plugin.getLogger().log(Level.SEVERE, "This method is totally useless in this implementation!");
     }
@@ -49,6 +51,7 @@ public class PunishmentStorage implements Storage<Punishment> {
     }
 
     @Override
+    @Deprecated
     public void saveAll() {
         plugin.getLogger().log(Level.SEVERE, "This method is totally useless in this implementation!");
     }
@@ -64,6 +67,6 @@ public class PunishmentStorage implements Storage<Punishment> {
     }
 
     private Datastore getDatastore() {
-        return mongoConnection.getDatastore("Punishment");
+        return mongoConnection.getDatastore("punishments");
     }
 }

@@ -1,5 +1,6 @@
 package dev.notcacha.inferius.bukkit.storage;
 
+import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import dev.morphia.Datastore;
@@ -19,6 +20,9 @@ import java.util.UUID;
 public class UserStorage implements Storage<User> {
 
     @Inject
+    private ListeningExecutorService executorService;
+
+    @Inject
     private Inferius plugin;
     @Inject
     private MongoConnection mongoConnection;
@@ -27,15 +31,17 @@ public class UserStorage implements Storage<User> {
 
     @Override
     public Optional<User> find(String id) {
-        if (!exists(id)) {
-            return Optional.of(
-                    User.builder(id)
-                            .setName(plugin.getServer().getOfflinePlayer(UUID.fromString(id)).getName())
-                            .build()
-            );
+        User user = getDatastore().find(InferiusUser.class).field("_id").equal(id).first();
+
+        if (user == null) {
+            user = User.builder(id)
+                    .setName(plugin.getServer().getOfflinePlayer(UUID.fromString(id)).getName())
+                    .build();
         }
-        return Optional.ofNullable(getDatastore().find(InferiusUser.class).field("_id").equal(id).first());
+
+        return Optional.of(user);
     }
+
 
     @Override
     public void load(String id) {

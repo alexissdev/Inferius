@@ -1,5 +1,6 @@
 package dev.notcacha.inferius.bukkit.user;
 
+import dev.notcacha.inferius.buildable.Buildable;
 import dev.notcacha.inferius.model.Model;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -36,14 +37,14 @@ public interface User extends Model {
     }
 
     /**
-     * @return {@link Player} using {@code #getName()}
+     * @return {@link Player} using {@see User#getName()}
      */
 
     default Player getBukkitPlayerByName() {
         return Bukkit.getPlayer(getName());
     }
 
-    interface Builder {
+    interface Builder extends Buildable<User> {
 
         /**
          * Set name from user, @param name has been set
@@ -52,16 +53,10 @@ public interface User extends Model {
         Builder setName(String name);
 
         /**
-         * @see User#getLanguage()
+         * @see User#setLanguage(String)
          */
 
         Builder setLanguage(String language);
-
-        /**
-         * @return new {@link User} created from this options!
-         */
-
-        User build();
 
     }
 

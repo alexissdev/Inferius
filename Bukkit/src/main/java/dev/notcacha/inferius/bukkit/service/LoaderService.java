@@ -14,10 +14,14 @@ public class LoaderService implements Service {
     @Inject
     @Named("listener-loader")
     private Loader listenerLoader;
+    @Inject
+    @Named("command-loader")
+    private Loader commandLoader;
 
     @Override
     public void start() {
         listenerLoader.load();
+        commandLoader.load();
     }
 
     @Override
