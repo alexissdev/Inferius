@@ -3,7 +3,7 @@ package dev.notcacha.inferius.bukkit.commands;
 import com.google.inject.Inject;
 import dev.notcacha.inferius.bukkit.flow.annotation.Language;
 import dev.notcacha.inferius.bukkit.placeholder.LocationPlaceholderApplier;
-import dev.notcacha.inferius.manageable.ObjectManageable;
+import dev.notcacha.inferius.bukkit.spawn.SpawnManager;
 import dev.notcacha.languagelib.LanguageLib;
 import dev.notcacha.languagelib.message.TranslatableMessage;
 import me.fixeddev.commandflow.annotated.CommandClass;
@@ -17,13 +17,13 @@ public class SetSpawnCommand implements CommandClass {
     @Inject
     private LanguageLib languageLib;
     @Inject
-    private ObjectManageable<Location> spawnManageable;
+    private SpawnManager spawnManager;
 
     @Command(names = "setspawn")
     public boolean main(@Sender Player player, @Language String language) {
         Location location = player.getLocation();
 
-        spawnManageable.set(location);
+        spawnManager.set(location);
         TranslatableMessage message = languageLib.getTranslationManager().getTranslation("spawn.set");
 
         message.colorize().addPlaceholder(location, new LocationPlaceholderApplier());

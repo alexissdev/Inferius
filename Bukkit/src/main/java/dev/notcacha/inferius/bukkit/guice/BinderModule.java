@@ -5,7 +5,14 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import dev.notcacha.inferius.bukkit.Inferius;
-import dev.notcacha.inferius.bukkit.guice.modules.*;
+import dev.notcacha.inferius.bukkit.guice.modules.CacheModule;
+import dev.notcacha.inferius.bukkit.guice.modules.FormatterModule;
+import dev.notcacha.inferius.bukkit.guice.modules.GsonModule;
+import dev.notcacha.inferius.bukkit.guice.modules.LanguageModule;
+import dev.notcacha.inferius.bukkit.guice.modules.LoaderModule;
+import dev.notcacha.inferius.bukkit.guice.modules.ManagerModule;
+import dev.notcacha.inferius.bukkit.guice.modules.ServiceModule;
+import dev.notcacha.inferius.bukkit.guice.modules.StorageModule;
 
 import java.util.concurrent.Executors;
 
@@ -31,7 +38,6 @@ public class BinderModule extends AbstractModule {
         this.install(new GsonModule());
         this.install(new StorageModule());
         this.install(new ManagerModule());
-        this.install(new ManageableModule());
         this.install(new FormatterModule());
         this.install(new LoaderModule());
         this.install(new ServiceModule());

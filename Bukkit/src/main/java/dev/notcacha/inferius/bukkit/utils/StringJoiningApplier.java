@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 public class StringJoiningApplier {
 
+    @SafeVarargs
     public static <T> String apply(String delimiter, T... objects) {
         return Arrays.stream(objects)
                 .map(String::valueOf)
