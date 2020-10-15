@@ -6,19 +6,20 @@ import dev.notcacha.inferius.cache.Cache;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 
 @Singleton
-public class UserCache implements Cache<String, User> {
+public class UserCache implements Cache<UUID, User> {
 
-    private final Map<String, User> userMap;
+    private final Map<UUID, User> userMap;
 
     public UserCache() {
         this.userMap = new HashMap<>();
     }
 
     @Override
-    public Map<String, User> get() {
+    public Map<UUID, User> get() {
         return this.userMap;
     }
 }

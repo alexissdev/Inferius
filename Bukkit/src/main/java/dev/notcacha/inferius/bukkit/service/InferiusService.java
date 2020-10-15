@@ -9,22 +9,21 @@ import dev.notcacha.inferius.service.Service;
 public class InferiusService implements Service {
 
     @Inject
-    @Named("storage-service")
-    private Service storageService;
-
-    @Inject
     @Named("loader-service")
     private Service loaderService;
 
+    @Inject
+    @Named("warp-service")
+    private Service warpService;
     @Override
     public void start() {
-        storageService.start();
         loaderService.start();
+        warpService.start();
     }
 
     @Override
     public void stop() {
-        storageService.stop();
         loaderService.stop();
+        warpService.stop();
     }
 }

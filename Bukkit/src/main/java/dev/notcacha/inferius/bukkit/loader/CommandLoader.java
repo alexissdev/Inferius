@@ -3,7 +3,7 @@ package dev.notcacha.inferius.bukkit.loader;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import dev.notcacha.inferius.bukkit.Inferius;
-import dev.notcacha.inferius.bukkit.commands.BanCommand;
+import dev.notcacha.inferius.bukkit.commands.*;
 import dev.notcacha.inferius.bukkit.flow.InferiusTranslationProvider;
 import dev.notcacha.inferius.bukkit.flow.annotation.Language;
 import dev.notcacha.inferius.bukkit.flow.factory.LanguagePartFactory;
@@ -12,6 +12,7 @@ import me.fixeddev.commandflow.CommandManager;
 import me.fixeddev.commandflow.SimpleCommandManager;
 import me.fixeddev.commandflow.annotated.AnnotatedCommandTreeBuilder;
 import me.fixeddev.commandflow.annotated.AnnotatedCommandTreeBuilderImpl;
+import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.part.Key;
 import me.fixeddev.commandflow.annotated.part.PartInjector;
 import me.fixeddev.commandflow.annotated.part.SimplePartInjector;
@@ -36,24 +37,45 @@ public class CommandLoader implements Loader {
     private LanguagePartFactory languagePartFactory;
 
     @Inject
-    private BanCommand banCommand;
+    private ChatCommand chatCommand;
+    @Inject
+    private SetSpawnCommand setSpawnCommand;
+    @Inject
+    private SpawnCommand spawnCommand;
+    @Inject
+    private WarpCommand warpCommand;
+    @Inject
+    private PrivateMessageCommand privateMessageCommand;
+    @Inject
+    private ReplyPrivateMessageCommand replyPrivateMessageCommand;
+
+    private void register(AnnotatedCommandTreeBuilder builder, CommandManager manager, CommandClass... commandClasses) {
+        for (CommandClass commandClass : commandClasses) {
+            manager.registerCommands(builder.fromClass(commandClass));
+        }
+    }
 
     @Override
     public void load() {
-
         PartInjector partInjector = new SimplePartInjector();
         partInjector.install(new DefaultsModule());
         partInjector.install(new BukkitModule());
 
         partInjector.bindFactory(new Key(String.class, Language.class), languagePartFactory);
 
-        AnnotatedCommandTreeBuilder annotatedCommandTreeBuilder = new AnnotatedCommandTreeBuilderImpl(partInjector);
+        AnnotatedCommandTreeBuilder builder = new AnnotatedCommandTreeBuilderImpl(partInjector);
         CommandManager commandManager = new BukkitCommandManager(new SimpleCommandManager(new BukkitAuthorizer()), plugin.getName());
         commandManager.setTranslator(new DefaultTranslator(inferiusTranslationProvider));
 
-        List<Command> commandList = new ArrayList<>();
-        commandList.addAll(annotatedCommandTreeBuilder.fromClass(banCommand));
-
-        commandManager.registerCommands(commandList);
+        register(
+                builder,
+                commandManager,
+                chatCommand,
+                setSpawnCommand,
+                spawnCommand,
+                warpCommand,
+                privateMessageCommand,
+                replyPrivateMessageCommand
+        );
     }
 }

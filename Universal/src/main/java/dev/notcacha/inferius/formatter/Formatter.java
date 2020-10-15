@@ -28,6 +28,6 @@ public interface Formatter<T> {
      * @param formatter has been merge
      */
 
-    Formatter<?> merge(Formatter<?> formatter);
+    Formatter<T> merge(Formatter<T> formatter);
 
 }

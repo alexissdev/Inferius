@@ -1,8 +1,57 @@
+# General messages from inferius
 general:
   no-permission: "&cYou no have permissions to execute this command!"
   target-offline: "&cThe player %target_name% if offline!"
   only-player: "&cThis command can only be executed by a player!"
 
+# Flow i18n
 flow:
   unknown-sender: "&cUnknown command sender!"
   invalid-command: "&cInvalid command!"
+
+# Chat manager messages
+chat:
+  main:
+    - "&7&m----------------------------------"
+    - " &7/&echat mute &7- &8Mute chat!"
+    - " &7/&echat clear &7- &8Clear chat!"
+    - " &7/&echat delay <delay> &7- &8Set delay from chat!"
+    - "&7&m----------------------------------"
+  clear: "&eChat has been clear by &c%name%&e!"
+  muted:
+    is: "&cChat is muted!"
+    set: "&eChat has been &c%state% &eby &c%name% &e!"
+  delay:
+    contains: "&cYou have to wait %cooldown%s to run this again"
+    set: "&cDelay has been set to %delay%"
+
+# Warp messages
+warp:
+  main:
+    - "&7&m--------------------------------------"
+    - " &7/&ewarp <name> &7- &8Teleport from warp!"
+    - " &7/&ewarp create <name> &7- &8Create warp!"
+    - " &7/&ewarp delete <name> &7- &8Delete warp!"
+    - " &7/&ewarp list &7- &8Get all warps!"
+    - "&7&m--------------------------------------"
+  exists: "&cWarp %name% is already created!"
+  not-exists: "&cWarp %name% is not created!"
+  create: "&eWarp &c%name% &ehas been created!"
+  delete: "&eWarp &c%name% &e has been deleted!"
+  list: "&eAvailable warps&7: &c%warps%"
+  teleport:
+    no-permissions: "&cYou no have permission to teleport from %name% warp"
+    message: "&eYou has been teleport from &c%name% &ewarp!"
+
+# Spawn messages
+spawn:
+  set: "&eSpawn has been set!"
+  teleport: "&eYou has been teleport to &cspawn&e!"
+  not-exists: "&cSpawn not has been set!"
+
+# Private Message messages
+private-message:
+  main: "&cCorrect usage is /message <target> <message>"
+  to: "&7(To &e%target_name%&7) &f%message%"
+  from: "&7(From &e%player_name%&7) &f%message%"
+  not-last-author: "&cYou do not have a reply target!"

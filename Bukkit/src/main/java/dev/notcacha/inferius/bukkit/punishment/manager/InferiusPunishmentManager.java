@@ -7,7 +7,6 @@ import dev.notcacha.inferius.bukkit.punishment.Punishment;
 import dev.notcacha.inferius.bukkit.punishment.issuer.Issuer;
 import dev.notcacha.inferius.bukkit.punishment.punished.Punished;
 import dev.notcacha.inferius.bukkit.punishment.type.PunishmentType;
-import dev.notcacha.inferius.storage.Storage;
 
 @Singleton
 public class InferiusPunishmentManager implements PunishmentManager {

@@ -3,7 +3,6 @@ package dev.notcacha.inferius.bukkit.listeners;
 import com.google.inject.Inject;
 import dev.notcacha.inferius.bukkit.user.User;
 import dev.notcacha.inferius.cache.Cache;
-import dev.notcacha.inferius.exception.UserException;
 import dev.notcacha.inferius.storage.Storage;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,9 +26,9 @@ public class UserListeners implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         String id = event.getPlayer().getUniqueId().toString();
 
-        userStorage.save(
+        userStorage.saveAsync(
                 userCache.find(id)
-                        .orElseThrow(() -> new UserException(
+                        .orElseThrow(() -> new IllegalArgumentException(
                                 "An error occurred while trying to save the user {id=" + id + "}")
                         )
         );

@@ -5,9 +5,16 @@ import dev.notcacha.inferius.model.Model;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface User extends Model {
+
+    /**
+     * @return minecraft id from this {@link User}
+     * */
+
+    UUID getMinecraftId();
 
     /**
      * @return name from user
@@ -26,6 +33,20 @@ public interface User extends Model {
      */
 
     void setLanguage(String language);
+
+    /**
+     * @return the name of the last person who sent you a message or from whom you received a message
+     */
+
+    Optional<String> getLastAuthorPrivateMessage();
+
+    /**
+     * Set last author name has been send message
+     *
+     * @param author name has been set
+     */
+
+    void setLastAuthorPrivateMessage(String author);
 
 
     /**
@@ -64,7 +85,7 @@ public interface User extends Model {
      * @return an instance of {@link Builder} to be able to create an {@link User} object and set its properties
      */
 
-    static Builder builder(String id) {
-        return new InferiusUser.Builder(id);
+    static Builder builder(UUID minecraftId) {
+        return new InferiusUser.Builder(minecraftId);
     }
 }
