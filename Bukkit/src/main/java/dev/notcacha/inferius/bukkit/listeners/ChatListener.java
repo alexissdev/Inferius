@@ -3,7 +3,7 @@ package dev.notcacha.inferius.bukkit.listeners;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import dev.notcacha.inferius.bukkit.chat.ChatManager;
-import dev.notcacha.inferius.bukkit.cooldown.type.CooldownType;
+import dev.notcacha.inferius.bukkit.utils.CooldownType;
 import dev.notcacha.inferius.bukkit.utils.LanguageUtils;
 import dev.notcacha.inferius.cache.Cache;
 import dev.notcacha.inferius.formatter.Formatter;

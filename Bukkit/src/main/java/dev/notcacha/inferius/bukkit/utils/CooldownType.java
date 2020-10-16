@@ -1,4 +1,4 @@
-package dev.notcacha.inferius.bukkit.cooldown.type;
+package dev.notcacha.inferius.bukkit.utils;
 
 public enum CooldownType {
 
