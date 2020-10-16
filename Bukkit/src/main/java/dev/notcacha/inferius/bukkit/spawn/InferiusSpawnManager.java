@@ -7,6 +7,7 @@ import dev.notcacha.inferius.bukkit.Inferius;
 import dev.notcacha.inferius.json.JsonFileCreator;
 import org.bukkit.Location;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Singleton
@@ -37,7 +38,11 @@ public class InferiusSpawnManager implements SpawnManager {
     public void load() {
         JsonFileCreator file = JsonFileCreator.create(plugin.getDataFolder(), "spawn.json");
 
-        this.location = gson.fromJson(file.getJsonString(), Location.class);
+        try {
+            this.location = gson.fromJson(file.getJsonString(), Location.class);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("An error occurred while trying to create the spawn location", e);
+        }
     }
 
     @Override
@@ -47,6 +52,10 @@ public class InferiusSpawnManager implements SpawnManager {
         }
         JsonFileCreator file = JsonFileCreator.create(plugin.getDataFolder(), "spawn.json");
 
-        file.writeJson(gson.toJson(location));
+        try {
+            file.writeJson(gson.toJson(location));
+        } catch (IOException e) {
+            throw new IllegalArgumentException("An error occurred when trying to save the spawn in JSON format", e);
+        }
     }
 }

@@ -6,7 +6,6 @@ import org.json.simple.parser.ParseException;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,7 +16,7 @@ public class JsonFileCreator {
     private final File folder;
     private final String fileName;
 
-    public JsonFileCreator(File folder, String fileName)  {
+    public JsonFileCreator(File folder, String fileName) {
         this.folder = folder;
         this.fileName = fileName;
 
@@ -29,70 +28,47 @@ public class JsonFileCreator {
     }
 
     public void create() throws IOException {
-        file = new File(folder,fileName + ".json");
+        file = new File(folder, fileName + ".json");
 
-        if(!file.exists()){
+        if (!file.exists()) {
             file.createNewFile();
         }
 
     }
 
-    public void writeJson(JSONObject jsonObject) {
-        FileWriter writer;
-        try {
-            writer = new FileWriter(file);
-            writer.write(jsonObject.toString());
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void writeJson(JSONObject jsonObject) throws IOException {
+        FileWriter writer = new FileWriter(file);
+        writer.write(jsonObject.toString());
+        writer.flush();
+        writer.close();
 
     }
 
-    public void writeJson(String jsonObject){
-        FileWriter writer;
-        try {
-            writer = new FileWriter(file);
-            writer.write(jsonObject);
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void writeJson(String jsonObject) throws IOException {
+        FileWriter writer = new FileWriter(file);
+        writer.write(jsonObject);
+        writer.flush();
+        writer.close();
 
     }
 
-    public String getJsonString(){
-        FileReader fileReader = null;
-        try {
-            fileReader = new FileReader(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    public String getJsonString() throws IOException {
+        FileReader fileReader = new FileReader(file);
         BufferedReader reader = new BufferedReader(fileReader);
 
         String line;
 
         StringBuilder builder = new StringBuilder();
 
-        try {
-            while((line = reader.readLine()) != null){
-                builder.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        while ((line = reader.readLine()) != null) {
+            builder.append(line);
         }
+
         return builder.toString();
     }
 
-    public JSONObject toJsonObject() {
-        FileReader fileReader;
-        try {
-            fileReader = new FileReader(file);
-        } catch (FileNotFoundException e) {
-            throw new IllegalArgumentException("Error in reader file", e);
-        }
+    public JSONObject toJsonObject() throws IOException, ParseException {
+        FileReader fileReader = new FileReader(file);
 
         BufferedReader reader = new BufferedReader(fileReader);
 
@@ -100,23 +76,12 @@ public class JsonFileCreator {
 
         StringBuilder builder = new StringBuilder();
 
-        try {
-            if ((line = reader.readLine()) == null){
-                builder.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        if ((line = reader.readLine()) == null) {
+            builder.append(line);
         }
 
 
-        JSONObject jsonObject = null;
-        try {
-            jsonObject = (JSONObject) new JSONParser().parse(builder.toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return jsonObject;
+        return (JSONObject) new JSONParser().parse(builder.toString());
     }
 
     public static JsonFileCreator create(File folder, String name) {

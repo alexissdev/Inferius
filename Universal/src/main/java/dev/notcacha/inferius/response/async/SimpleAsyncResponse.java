@@ -29,7 +29,7 @@ public class SimpleAsyncResponse<T> implements AsyncResponse<T> {
 
             @Override
             public void onFailure(Throwable throwable) {
-                throwable.printStackTrace();
+               callback.handleException(throwable);
             }
         };
     }

@@ -10,6 +10,7 @@ import dev.notcacha.inferius.response.async.AsyncResponse;
 import dev.notcacha.inferius.response.async.SimpleAsyncResponse;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Set;
 
 @Singleton
@@ -30,7 +31,11 @@ public class JsonModelSave<T extends Model> implements ModelSave<T> {
     public void saveSync(T model) {
         JsonFileCreator file = JsonFileCreator.create(folder, model.getId() + ".json");
 
-        file.writeJson(gson.toJson(model));
+        try {
+            file.writeJson(gson.toJson(model));
+        } catch (IOException e) {
+            throw new IllegalArgumentException("An error occurred while trying to write the file", e);
+        }
     }
 
     @Override

@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.UUID;
 
-public class UserListeners implements Listener {
+public class UserListener implements Listener {
 
     @Inject
     private Storage<User> userStorage;

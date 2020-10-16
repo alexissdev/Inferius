@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import dev.notcacha.inferius.bukkit.Inferius;
 import dev.notcacha.inferius.bukkit.listeners.ChatListener;
-import dev.notcacha.inferius.bukkit.listeners.UserListeners;
+import dev.notcacha.inferius.bukkit.listeners.UserListener;
 import dev.notcacha.inferius.loader.Loader;
 import org.bukkit.event.Listener;
 
@@ -15,7 +15,7 @@ public class ListenerLoader implements Loader {
     private Inferius plugin;
 
     @Inject
-    private UserListeners userListeners;
+    private UserListener userListener;
     @Inject
     private ChatListener chatListener;
 
@@ -28,7 +28,7 @@ public class ListenerLoader implements Loader {
     @Override
     public void load() {
         loadAll(
-                userListeners,
+                userListener,
                 chatListener
         );
     }

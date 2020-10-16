@@ -12,6 +12,7 @@ import dev.notcacha.inferius.response.async.SimpleAsyncResponse;
 import dev.notcacha.inferius.response.state.ResponseStatus;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -37,7 +38,11 @@ public class JsonModelFind<T extends Model> implements ModelFind<T> {
     public Optional<T> findOneSync(String id) {
         JsonFileCreator file = JsonFileCreator.create(folder, id + ".json");
 
-        return Optional.ofNullable(gson.fromJson(file.getJsonString(), clazz));
+        try {
+            return Optional.ofNullable(gson.fromJson(file.getJsonString(), clazz));
+        } catch (IOException e) {
+            throw new IllegalArgumentException("An error occurred while trying to get the text in JSON format", e);
+        }
     }
 
     @Override
