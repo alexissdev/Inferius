@@ -19,4 +19,26 @@ public class InferiusIssuer implements Issuer {
     public String getName() {
         return this.name;
     }
+
+    public static class Builder implements Issuer.Builder {
+
+        private final String id;
+        private String name;
+
+        public Builder(String id) {
+            this.id = id;
+            this.name = null;
+        }
+
+        @Override
+        public Issuer.Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        @Override
+        public Issuer build() {
+            return new InferiusIssuer(id, name);
+        }
+    }
 }

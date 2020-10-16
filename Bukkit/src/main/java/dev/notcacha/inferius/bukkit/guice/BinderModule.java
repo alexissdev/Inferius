@@ -5,14 +5,8 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import dev.notcacha.inferius.bukkit.Inferius;
-import dev.notcacha.inferius.bukkit.guice.modules.CacheModule;
-import dev.notcacha.inferius.bukkit.guice.modules.FormatterModule;
-import dev.notcacha.inferius.bukkit.guice.modules.GsonModule;
-import dev.notcacha.inferius.bukkit.guice.modules.LanguageModule;
-import dev.notcacha.inferius.bukkit.guice.modules.LoaderModule;
-import dev.notcacha.inferius.bukkit.guice.modules.ManagerModule;
-import dev.notcacha.inferius.bukkit.guice.modules.ServiceModule;
-import dev.notcacha.inferius.bukkit.guice.modules.StorageModule;
+import dev.notcacha.inferius.bukkit.file.FileCreator;
+import dev.notcacha.inferius.bukkit.guice.modules.*;
 
 import java.util.concurrent.Executors;
 
@@ -20,9 +14,11 @@ import java.util.concurrent.Executors;
 public class BinderModule extends AbstractModule {
 
     private final Inferius inferius;
+    private final FileCreator config;
 
     public BinderModule(Inferius inferius) {
         this.inferius = inferius;
+        this.config =  new FileCreator(inferius, "config.yml");
     }
 
     @Override
@@ -34,6 +30,8 @@ public class BinderModule extends AbstractModule {
                 .in(Scopes.SINGLETON);
 
         this.install(new LanguageModule(inferius));
+        this.install(new MongoModule(config));
+        this.install(new ModelModule(inferius, config.getBoolean("mongo.use")));
         this.install(new CacheModule());
         this.install(new GsonModule());
         this.install(new StorageModule());
@@ -42,4 +40,5 @@ public class BinderModule extends AbstractModule {
         this.install(new LoaderModule());
         this.install(new ServiceModule());
     }
+
 }

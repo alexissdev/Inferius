@@ -1,5 +1,18 @@
 package dev.notcacha.inferius.bukkit.punishment.type;
 
 public enum PunishmentType {
-    BAN, KICK, MUTE
+
+    BAN("banned"),
+    KICK("kicked"),
+    MUTE("muted");
+
+    private final String id;
+
+    PunishmentType(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
 }

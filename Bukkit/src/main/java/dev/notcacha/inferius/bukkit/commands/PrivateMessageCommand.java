@@ -1,7 +1,7 @@
 package dev.notcacha.inferius.bukkit.commands;
 
 import com.google.inject.Inject;
-import dev.notcacha.inferius.bukkit.flow.annotation.Language;
+
 import dev.notcacha.inferius.bukkit.utils.LanguageUtils;
 import dev.notcacha.languagelib.LanguageLib;
 import dev.notcacha.languagelib.message.TranslatableMessage;
@@ -20,7 +20,8 @@ public class PrivateMessageCommand implements CommandClass {
     private LanguageUtils languageUtils;
 
     @Command(names = {"message", "tell", "msg"}, permission = "inferius.privatemessage")
-    public boolean main(@Sender Player player, @Language String language, OfflinePlayer target, @Text String privateMessage) {
+    public boolean main(@Sender Player player, OfflinePlayer target, @Text String privateMessage) {
+        String language = languageUtils.getLanguageFromPlayer(player);
         if (privateMessage.isEmpty()) {
             TranslatableMessage message = languageLib.getTranslationManager().getTranslation("private-message.main");
 

@@ -1,4 +1,4 @@
-package dev.notcacha.inferius.bukkit.file;
+package dev.notcacha.inferius.json;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

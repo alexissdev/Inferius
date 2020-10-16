@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import dev.notcacha.inferius.bukkit.Inferius;
-import dev.notcacha.inferius.bukkit.file.JsonFileCreator;
+import dev.notcacha.inferius.json.JsonFileCreator;
 import org.bukkit.Location;
 
 import java.util.Optional;

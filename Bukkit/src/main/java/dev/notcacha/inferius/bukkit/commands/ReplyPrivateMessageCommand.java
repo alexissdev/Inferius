@@ -1,7 +1,7 @@
 package dev.notcacha.inferius.bukkit.commands;
 
 import com.google.inject.Inject;
-import dev.notcacha.inferius.bukkit.flow.annotation.Language;
+
 import dev.notcacha.inferius.bukkit.user.User;
 import dev.notcacha.inferius.bukkit.utils.LanguageUtils;
 import dev.notcacha.inferius.cache.Cache;
@@ -28,7 +28,9 @@ public class ReplyPrivateMessageCommand implements CommandClass {
     private Cache<UUID, User> userCache;
 
     @Command(names = {"reply", "r"}, permission = "inferius.privatemessage")
-    public boolean main(@Sender Player player, @Language String language, @Text String privateMessage) {
+    public boolean main(@Sender Player player, @Text String privateMessage) {
+        String language = languageUtils.getLanguageFromPlayer(player);
+
         Optional<User> user = userCache.find(player.getUniqueId());
         if (!user.isPresent()) {
             return false;

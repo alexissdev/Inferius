@@ -1,8 +1,9 @@
 package dev.notcacha.inferius.bukkit.commands;
 
 import com.google.inject.Inject;
-import dev.notcacha.inferius.bukkit.flow.annotation.Language;
+
 import dev.notcacha.inferius.bukkit.spawn.SpawnManager;
+import dev.notcacha.inferius.bukkit.utils.LanguageUtils;
 import dev.notcacha.languagelib.LanguageLib;
 import dev.notcacha.languagelib.message.TranslatableMessage;
 import me.fixeddev.commandflow.annotated.CommandClass;
@@ -19,9 +20,12 @@ public class SpawnCommand implements CommandClass {
     private LanguageLib languageLib;
     @Inject
     private SpawnManager spawnManager;
+    @Inject
+    private LanguageUtils languageUtils;
 
     @Command(names = "spawn")
-    public boolean main(@Sender Player player, @Language String language) {
+    public boolean main(@Sender Player player) {
+        String language = languageUtils.getLanguageFromPlayer(player);
         Optional<Location> location = spawnManager.get();
 
         if (!location.isPresent()) {

@@ -2,7 +2,7 @@ package dev.notcacha.inferius.bukkit.commands;
 
 import com.google.inject.Inject;
 import dev.notcacha.inferius.bukkit.chat.ChatManager;
-import dev.notcacha.inferius.bukkit.flow.annotation.Language;
+
 import dev.notcacha.inferius.bukkit.utils.LanguageUtils;
 import dev.notcacha.languagelib.LanguageLib;
 import dev.notcacha.languagelib.message.TranslatableMessage;
@@ -22,7 +22,8 @@ public class ChatCommand implements CommandClass {
     private ChatManager chatManager;
 
     @Command(names = "")
-    public boolean main(CommandSender sender, @Language String language) {
+    public boolean main(CommandSender sender) {
+        String language = languageUtils.getLanguageFromCommandSender(sender);
         TranslatableMessage message = languageLib.getTranslationManager().getTranslation("chat.main");
 
         message.colorize().getMessages(language).forEach(sender::sendMessage);
@@ -73,8 +74,8 @@ public class ChatCommand implements CommandClass {
     }
 
     @Command(names = "delay", permission = "inferius.chat.delay")
-    public boolean delay(CommandSender sender, Long time) {
-        chatManager.setDelay(time);
+    public boolean delay(CommandSender sender, int time) {
+        chatManager.setDelay((time == 0) ? -1L : (long) time);
 
         TranslatableMessage message = languageLib.getTranslationManager().getTranslation("delay.set");
 

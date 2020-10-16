@@ -109,4 +109,9 @@ public interface Punishment extends Model {
         return new InferiusPunishment.Builder(id);
     }
 
+    /**
+     * @return database name from {@link Punishment}'s)
+     */
+
+    String DATABASE = "punishments";
 }

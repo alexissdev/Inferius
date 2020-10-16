@@ -1,7 +1,8 @@
 package dev.notcacha.inferius.bukkit.commands;
 
 import com.google.inject.Inject;
-import dev.notcacha.inferius.bukkit.flow.annotation.Language;
+
+import dev.notcacha.inferius.bukkit.utils.LanguageUtils;
 import dev.notcacha.inferius.bukkit.warp.Warp;
 import dev.notcacha.inferius.cache.Cache;
 import dev.notcacha.inferius.storage.Storage;
@@ -24,9 +25,12 @@ public class WarpCommand implements CommandClass {
     private Cache<String, Warp> warpCache;
     @Inject
     private Storage<Warp> warpStorage;
+    @Inject
+    private LanguageUtils languageUtils;
 
     @Command(names = "")
-    public boolean main(@Sender Player player, @Language String language, @OptArg String name) {
+    public boolean main(@Sender Player player, @OptArg String name) {
+        String language = languageUtils.getLanguageFromPlayer(player);
         Optional<Warp> warp = warpCache.find(name);
 
         if (name == null || !warp.isPresent()) {
@@ -53,7 +57,8 @@ public class WarpCommand implements CommandClass {
     }
 
     @Command(names = {"create", "add"}, permission = "inferius.warp.create")
-    public boolean create(@Sender Player player, @Language String language, String warpName) {
+    public boolean create(@Sender Player player, String warpName) {
+        String language = languageUtils.getLanguageFromPlayer(player);
         if (warpCache.exists(warpName)) {
             TranslatableMessage message = languageLib.getTranslationManager().getTranslation("warp.exists");
             message.colorize().setVariable("%name%", warpName);
@@ -72,7 +77,8 @@ public class WarpCommand implements CommandClass {
     }
 
     @Command(names = {"delete", "remove"}, permission = "inferius.warp.remove")
-    public boolean delete(@Sender Player player, @Language String language, String warpName) {
+    public boolean delete(@Sender Player player, String warpName) {
+        String language = languageUtils.getLanguageFromPlayer(player);
         Optional<Warp> warp = warpCache.find(warpName);
 
         if (!warp.isPresent()) {
@@ -94,7 +100,8 @@ public class WarpCommand implements CommandClass {
     }
 
     @Command(names = "list")
-    public boolean list(@Sender Player player, @Language String language) {
+    public boolean list(@Sender Player player) {
+        String language = languageUtils.getLanguageFromPlayer(player);
         TranslatableMessage message = languageLib.getTranslationManager().getTranslation("warp.list");
 
         message.colorize()

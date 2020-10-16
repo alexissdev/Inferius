@@ -91,16 +91,4 @@ public interface Storage<T extends Model> {
      */
 
     AsyncResponse<Void> deleteAsync(Set<T> objects);
-
-    /**
-     * Load an object {@param T} using {@param id} as identifier to get the object
-     */
-
-    void load(String id);
-
-    /**
-     * Load an object {@param T} asynchronously, using {@param id} as an identifier to get the object
-     */
-
-    void loadAsync(String id);
 }

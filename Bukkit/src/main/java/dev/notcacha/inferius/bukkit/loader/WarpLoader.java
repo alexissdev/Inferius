@@ -5,7 +5,7 @@ import com.google.inject.Singleton;
 import dev.notcacha.inferius.bukkit.Inferius;
 import dev.notcacha.inferius.bukkit.warp.Warp;
 import dev.notcacha.inferius.loader.Loader;
-import dev.notcacha.inferius.storage.Storage;
+import dev.notcacha.inferius.model.load.ModelLoad;
 
 import java.io.File;
 
@@ -16,18 +16,22 @@ public class WarpLoader implements Loader {
     private Inferius plugin;
 
     @Inject
-    private Storage<Warp> warpStorage;
+    private ModelLoad<Warp> warpLoader;
 
     @Override
     public void load() {
         File folder = new File(plugin.getDataFolder(), "/warps/");
+
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
 
         for (File file : folder.listFiles()) {
             if (file.isDirectory()) {
                 continue;
             }
 
-            warpStorage.load(file.getName().replace(".json", ""));
+            warpLoader.loadSync(file.getName().replace(".json", ""));
         }
     }
 

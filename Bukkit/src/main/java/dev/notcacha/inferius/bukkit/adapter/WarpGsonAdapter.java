@@ -10,7 +10,7 @@ import dev.notcacha.inferius.bukkit.warp.Warp;
 
 import java.lang.reflect.Type;
 
-public class WarpAdapter implements GsonAdapter<Warp> {
+public class WarpGsonAdapter implements GsonAdapter<Warp> {
 
     @Override
     public JsonElement serialize(Warp src, Type typeOfSrc, JsonSerializationContext context) {

@@ -8,12 +8,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Singleton
 public class LanguageUtils {
 
     @Inject
-    private Cache<String, User> userCache;
+    private Cache<UUID, User> userCache;
 
     private final String DEFAULT_LANGUAGE = "en";
 
@@ -29,7 +30,7 @@ public class LanguageUtils {
     public String getLanguageFromPlayer(Player player) {
         String language = DEFAULT_LANGUAGE;
 
-        Optional<User> user = userCache.find(player.getUniqueId().toString());
+        Optional<User> user = userCache.find(player.getUniqueId());
 
         if (user.isPresent()) {
             language = user.get().getLanguage();

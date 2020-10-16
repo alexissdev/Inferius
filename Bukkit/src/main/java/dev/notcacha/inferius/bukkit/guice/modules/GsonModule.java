@@ -4,8 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
-import dev.notcacha.inferius.bukkit.adapter.LocationAdapter;
-import dev.notcacha.inferius.bukkit.adapter.WarpAdapter;
+import dev.notcacha.inferius.bukkit.adapter.LocationGsonAdapter;
+import dev.notcacha.inferius.bukkit.adapter.PunishmentGsonAdapter;
+import dev.notcacha.inferius.bukkit.adapter.UserGsonAdapter;
+import dev.notcacha.inferius.bukkit.adapter.WarpGsonAdapter;
+import dev.notcacha.inferius.bukkit.punishment.Punishment;
+import dev.notcacha.inferius.bukkit.user.User;
 import dev.notcacha.inferius.bukkit.warp.Warp;
 import org.bukkit.Location;
 
@@ -17,8 +21,10 @@ public class GsonModule extends AbstractModule {
                 () ->
                         new GsonBuilder().setPrettyPrinting()
                                 .serializeNulls()
-                                .registerTypeAdapter(Warp.class, new WarpAdapter())
-                                .registerTypeAdapter(Location.class, new LocationAdapter())
+                                .registerTypeAdapter(Warp.class, new WarpGsonAdapter())
+                                .registerTypeAdapter(Location.class, new LocationGsonAdapter())
+                                .registerTypeAdapter(User.class, new UserGsonAdapter())
+                                .registerTypeAdapter(Punishment.class, new PunishmentGsonAdapter())
                                 .create())
                 .in(Scopes.SINGLETON);
     }

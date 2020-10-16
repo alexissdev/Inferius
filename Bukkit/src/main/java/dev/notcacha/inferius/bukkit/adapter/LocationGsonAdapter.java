@@ -1,12 +1,16 @@
 package dev.notcacha.inferius.bukkit.adapter;
 
-import com.google.gson.*;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
 import dev.notcacha.inferius.bukkit.utils.LocationUtils;
 import org.bukkit.Location;
 
 import java.lang.reflect.Type;
 
-public class LocationAdapter implements GsonAdapter<Location> {
+public class LocationGsonAdapter implements GsonAdapter<Location> {
 
     @Override
     public JsonElement serialize(Location src, Type typeOfSrc, JsonSerializationContext context) {

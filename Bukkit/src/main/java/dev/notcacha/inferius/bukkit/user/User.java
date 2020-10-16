@@ -88,4 +88,10 @@ public interface User extends Model {
     static Builder builder(UUID minecraftId) {
         return new InferiusUser.Builder(minecraftId);
     }
+
+    /**
+     * @return database name from {@link User}'s )
+     * */
+
+    String DATABASE = "users";
 }

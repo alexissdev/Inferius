@@ -9,27 +9,29 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.UUID;
+
 public class UserListeners implements Listener {
 
     @Inject
     private Storage<User> userStorage;
 
     @Inject
-    private Cache<String, User> userCache;
+    private Cache<UUID, User> userCache;
 
     @EventHandler
     public void onAsyncPreLogin(AsyncPlayerPreLoginEvent event) {
-        userStorage.load(event.getUniqueId().toString());
+//        userStorage.load(event.getUniqueId().toString());
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        String id = event.getPlayer().getUniqueId().toString();
+        UUID id = event.getPlayer().getUniqueId();
 
         userStorage.saveAsync(
                 userCache.find(id)
                         .orElseThrow(() -> new IllegalArgumentException(
-                                "An error occurred while trying to save the user {id=" + id + "}")
+                                "An error occurred while trying to save the user {id=" + id.toString() + "}")
                         )
         );
     }
