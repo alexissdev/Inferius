@@ -7,6 +7,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import dev.notcacha.inferius.bukkit.utils.LocationUtils;
 import dev.notcacha.inferius.bukkit.warp.Warp;
+import dev.notcacha.inferius.json.adapter.GsonAdapter;
 
 import java.lang.reflect.Type;
 

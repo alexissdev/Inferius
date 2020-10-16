@@ -1,4 +1,4 @@
-package dev.notcacha.inferius.bukkit.adapter;
+package dev.notcacha.inferius.json.adapter;
 
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonSerializer;

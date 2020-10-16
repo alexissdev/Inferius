@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import dev.notcacha.inferius.bukkit.utils.LocationUtils;
+import dev.notcacha.inferius.json.adapter.GsonAdapter;
 import org.bukkit.Location;
 
 import java.lang.reflect.Type;

@@ -2,6 +2,7 @@ package dev.notcacha.inferius.bukkit.adapter;
 
 import com.google.gson.*;
 import dev.notcacha.inferius.bukkit.user.User;
+import dev.notcacha.inferius.json.adapter.GsonAdapter;
 
 import java.lang.reflect.Type;
 import java.util.UUID;

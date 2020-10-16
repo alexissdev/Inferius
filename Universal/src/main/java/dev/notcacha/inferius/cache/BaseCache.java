@@ -18,4 +18,5 @@ public class BaseCache<K, V> implements Cache<K, V> {
     public Map<K, V> get() {
         return this.cacheMap;
     }
+
 }

@@ -9,6 +9,7 @@ import dev.notcacha.inferius.bukkit.punishment.Punishment;
 import dev.notcacha.inferius.bukkit.punishment.issuer.Issuer;
 import dev.notcacha.inferius.bukkit.punishment.punished.Punished;
 import dev.notcacha.inferius.bukkit.punishment.type.PunishmentType;
+import dev.notcacha.inferius.json.adapter.GsonAdapter;
 
 import java.lang.reflect.Type;
 
