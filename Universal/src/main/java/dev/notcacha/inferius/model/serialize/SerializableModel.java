@@ -62,13 +62,13 @@ public interface SerializableModel {
                 continue;
             }
 
-            if (method.getAnnotation(SerializeIgnore.class) != null) {
+            if (!method.isAnnotationPresent(SerializeIgnore.class)) {
                 continue;
             }
 
             SerializeProperty property = method.getAnnotation(SerializeProperty.class);
 
-            String name = (property != null) ? property.value() : method.getName().substring(get.length());
+            String name = (property != null) ? property.value() : method.getName().substring(get.length()).toLowerCase();
 
             serialize.put(name, method.invoke(model));
         }
