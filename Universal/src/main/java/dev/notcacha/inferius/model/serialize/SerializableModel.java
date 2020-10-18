@@ -54,7 +54,7 @@ public interface SerializableModel {
         }
 
         for (Method method : clazz.getDeclaredMethods()) {
-            if (method.getReturnType() == Void.class) {
+            if (method.getReturnType() == void.class) {
                 continue;
             }
 
