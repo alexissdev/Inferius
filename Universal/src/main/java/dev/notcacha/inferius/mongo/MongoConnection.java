@@ -4,7 +4,9 @@ import com.mongodb.MongoClient;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 
-public interface MongoConnection {
+import java.io.Closeable;
+
+public interface MongoConnection extends Closeable {
 
     /**
      * Create the connection to the database.
@@ -23,11 +25,5 @@ public interface MongoConnection {
      */
 
     Morphia getMorphia();
-
-    /**
-     * Close the connection to the database.
-     */
-
-    void close();
 
 }

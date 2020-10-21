@@ -12,5 +12,7 @@ public interface Service {
      * Stop service
      */
 
-    void stop();
+    default void stop() {
+        // this method is for the classes to abstract it if necessary
+    }
 }

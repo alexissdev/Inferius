@@ -1,4 +1,4 @@
-package dev.notcacha.inferius.bukkit.storage;
+package dev.notcacha.inferius.storage;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -7,13 +7,12 @@ import dev.notcacha.inferius.model.delete.ModelDelete;
 import dev.notcacha.inferius.model.find.ModelFind;
 import dev.notcacha.inferius.model.save.ModelSave;
 import dev.notcacha.inferius.response.async.AsyncResponse;
-import dev.notcacha.inferius.storage.Storage;
 
 import java.util.Optional;
 import java.util.Set;
 
 @Singleton
-public class BaseStorage<T extends Model> implements Storage<T> {
+public class ModelStorage<T extends Model> implements Storage<T> {
 
     @Inject
     private ModelFind<T> modelFind;

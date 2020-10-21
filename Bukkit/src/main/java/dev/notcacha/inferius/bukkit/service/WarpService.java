@@ -5,7 +5,6 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import dev.notcacha.inferius.bukkit.warp.Warp;
 import dev.notcacha.inferius.cache.Cache;
-import dev.notcacha.inferius.loader.Loader;
 import dev.notcacha.inferius.service.Service;
 import dev.notcacha.inferius.storage.Storage;
 
@@ -16,7 +15,7 @@ public class WarpService implements Service {
 
     @Inject
     @Named("warp-loader")
-    private Loader loader;
+    private Service loader;
     @Inject
     private Cache<String, Warp> warpCache;
     @Inject
@@ -24,7 +23,7 @@ public class WarpService implements Service {
 
     @Override
     public void start() {
-        loader.load();
+        loader.start();
     }
 
     @Override

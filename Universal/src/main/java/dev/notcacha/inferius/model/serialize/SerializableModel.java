@@ -31,6 +31,7 @@ public interface SerializableModel {
 
     static <T extends Model> Map<String, Object> serialize(T model) throws InvocationTargetException, IllegalAccessException {
         Map<String, Object> serialize = new HashMap<>();
+
         String get = "get";
 
         Class<?> clazz = model.getClass();
@@ -48,7 +49,6 @@ public interface SerializableModel {
                 serialize.put("deserialize_class", deserializeAnnotationClass);
             }
         }
-
         if (!serialize.containsKey("deserialize_class")) {
             serialize.put("deserialize_class", clazz);
         }

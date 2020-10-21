@@ -1,4 +1,4 @@
-package dev.notcacha.inferius.bukkit.loader;
+package dev.notcacha.inferius.bukkit.service;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -10,7 +10,7 @@ import dev.notcacha.inferius.bukkit.commands.SetSpawnCommand;
 import dev.notcacha.inferius.bukkit.commands.SpawnCommand;
 import dev.notcacha.inferius.bukkit.commands.WarpCommand;
 import dev.notcacha.inferius.bukkit.flow.InferiusTranslationProvider;
-import dev.notcacha.inferius.loader.Loader;
+import dev.notcacha.inferius.service.Service;
 import me.fixeddev.commandflow.CommandManager;
 import me.fixeddev.commandflow.SimpleCommandManager;
 import me.fixeddev.commandflow.annotated.AnnotatedCommandTreeBuilder;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Singleton
-public class CommandLoader implements Loader {
+public class CommandLoaderService implements Service {
 
     @Inject
     private Inferius plugin;
@@ -48,7 +48,7 @@ public class CommandLoader implements Loader {
     private ReplyPrivateMessageCommand replyPrivateMessageCommand;
 
     @Override
-    public void load() {
+    public void start() {
         PartInjector partInjector = new SimplePartInjector();
         partInjector.install(new DefaultsModule());
         partInjector.install(new BukkitModule());

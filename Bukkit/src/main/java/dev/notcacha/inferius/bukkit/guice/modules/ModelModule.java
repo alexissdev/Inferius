@@ -22,6 +22,6 @@ public class ModelModule extends AbstractModule {
         this.install(new ModelFindModule(inferius, useDatabase));
         this.install(new ModelSaveModule(inferius, useDatabase));
         this.install(new ModelDeleteModule(inferius, useDatabase));
-        this.install(new ModelLoaderModule(useDatabase));
+        this.install(new ModelLoaderModule());
     }
 }

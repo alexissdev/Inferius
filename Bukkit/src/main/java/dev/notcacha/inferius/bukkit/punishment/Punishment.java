@@ -1,30 +1,55 @@
 package dev.notcacha.inferius.bukkit.punishment;
 
 import dev.notcacha.inferius.buildable.Buildable;
-import dev.notcacha.inferius.bukkit.punishment.issuer.Issuer;
-import dev.notcacha.inferius.bukkit.punishment.punished.Punished;
 import dev.notcacha.inferius.bukkit.punishment.type.PunishmentType;
 import dev.notcacha.inferius.model.Model;
+import dev.notcacha.inferius.model.serialize.annotation.Deserialize;
+import dev.notcacha.inferius.model.serialize.annotation.SerializeIgnore;
+import dev.notcacha.inferius.model.serialize.annotation.SerializeProperty;
 
+import java.net.InetSocketAddress;
+
+@Deserialize(InferiusPunishment.class)
 public interface Punishment extends Model {
+
+    @SerializeProperty("_id")
+    String getId();
 
     /**
      * @return default reason from punishment
      */
 
-    String DEFAULT_REASON = "None";
+    String DEFAULT_REASON = "NONE";
 
     /**
-     * @return an object {@link Issuer} with all the information of the issuer
+     * @return id from issuer
      */
 
-    Issuer getIssuer();
+    String getIssuerId();
 
     /**
-     * @return an object {@link Punished} with all the punished information
+     * @return name from Issuer
      */
 
-    Punished getPunished();
+    String getIssuerName();
+
+    /**
+     * @return id from Punished
+     */
+
+    String getPunishedId();
+
+    /**
+     * @return name from Punished
+     */
+
+    String getPunishedName();
+
+    /**
+     * @return address from Punished in {@link InetSocketAddress} format
+     */
+
+    String getPunishedAddress();
 
     /**
      * @return reason from punishment has been set
@@ -60,23 +85,43 @@ public interface Punishment extends Model {
      * @return this punishment is permanent
      */
 
+    @SerializeIgnore
     default boolean isPermanent() {
         return getEndTime() == -1;
     }
 
     interface Builder extends Buildable<Punishment> {
 
-        /**
-         * Set {@link Issuer} from {@link Punishment}
-         */
-
-        Builder setIssuer(Issuer issuer);
 
         /**
-         * Set {@link Punished} from {@link Punishment}
+         * Set id from issuer, {@param id} has been set
          */
 
-        Builder setPunished(Punished punished);
+        Builder setIssuerId(String id);
+
+        /**
+         * Set name from issuer, {@param name} has been set
+         */
+
+        Builder setIssuerName(String name);
+
+        /**
+         * Set id from punished, {@param id} has been set.
+         */
+
+        Builder setPunishedId(String id);
+
+        /**
+         * Set name from punished, {@param name} has been set.
+         */
+
+        Builder setPunishedName(String name);
+
+        /**
+         * Set address from punished, {@param address} has been set.
+         */
+
+        Builder setPunishedAddress(String address);
 
         /**
          * Set reason from {@link Punishment}

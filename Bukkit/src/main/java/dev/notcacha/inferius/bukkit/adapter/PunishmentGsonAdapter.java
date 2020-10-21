@@ -6,8 +6,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import dev.notcacha.inferius.bukkit.punishment.Punishment;
-import dev.notcacha.inferius.bukkit.punishment.issuer.Issuer;
-import dev.notcacha.inferius.bukkit.punishment.punished.Punished;
 import dev.notcacha.inferius.bukkit.punishment.type.PunishmentType;
 import dev.notcacha.inferius.json.adapter.GsonAdapter;
 
@@ -20,11 +18,11 @@ public class PunishmentGsonAdapter implements GsonAdapter<Punishment> {
         JsonObject object = new JsonObject();
 
         object.addProperty("_id", src.getId());
-        object.addProperty("issuer_id", src.getIssuer().getId());
-        object.addProperty("issuer_name", src.getIssuer().getName());
-        object.addProperty("punished_id", src.getPunished().getId());
-        object.addProperty("punished_name", src.getPunished().getName());
-        object.addProperty("punished_ip", src.getPunished().getAddress());
+        object.addProperty("issuer_id", src.getIssuerId());
+        object.addProperty("issuer_name", src.getIssuerName());
+        object.addProperty("punished_id", src.getPunishedId());
+        object.addProperty("punished_name", src.getPunishedName());
+        object.addProperty("punished_ip", src.getPunishedAddress());
         object.addProperty("reason", src.getReason());
         object.addProperty("type", src.getType().getId());
         object.addProperty("end_time", src.getEndTime());
@@ -39,26 +37,20 @@ public class PunishmentGsonAdapter implements GsonAdapter<Punishment> {
         return Punishment.builder(
                 object.get("_id").getAsString()
         )
-                .setIssuer(
-                        Issuer.builder(
-                                object.get("issuer_id").getAsString()
-                        )
-                                .setName(
-                                        object.get("issuer_name").getAsString()
-                                )
-                                .build()
+                .setIssuerId(
+                        object.get("issuer_id").getAsString()
                 )
-                .setPunished(
-                        Punished.build(
-                                object.get("punished_id").getAsString()
-                        )
-                                .setName(
-                                        object.get("punished_name").getAsString()
-                                )
-                                .setAddress(
-                                        object.get("punished_ip").getAsString()
-                                )
-                                .build()
+                .setIssuerName(
+                        object.get("issuer_name").getAsString()
+                )
+                .setPunishedId(
+                        object.get("punished_id").getAsString()
+                )
+                .setPunishedName(
+                        object.get("punished_name").getAsString()
+                )
+                .setPunishedAddress(
+                        object.get("punished_ip").getAsString()
                 )
                 .setReason(
                         object.get("reason").getAsString()

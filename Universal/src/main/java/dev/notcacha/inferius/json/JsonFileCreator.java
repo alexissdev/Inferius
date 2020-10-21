@@ -23,12 +23,12 @@ public class JsonFileCreator {
         try {
             create();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("An error occurred when trying to create the " + fileName + " file", e);
         }
     }
 
     public void create() throws IOException {
-        file = new File(folder, fileName + ".json");
+        file = new File(folder, fileName);
 
         if (!file.exists()) {
             file.createNewFile();
@@ -37,11 +37,7 @@ public class JsonFileCreator {
     }
 
     public void writeJson(JSONObject jsonObject) throws IOException {
-        FileWriter writer = new FileWriter(file);
-        writer.write(jsonObject.toString());
-        writer.flush();
-        writer.close();
-
+        this.writeJson(jsonObject.toJSONString());
     }
 
     public void writeJson(String jsonObject) throws IOException {
@@ -49,7 +45,6 @@ public class JsonFileCreator {
         writer.write(jsonObject);
         writer.flush();
         writer.close();
-
     }
 
     public String getJsonString() throws IOException {
@@ -63,6 +58,9 @@ public class JsonFileCreator {
         while ((line = reader.readLine()) != null) {
             builder.append(line);
         }
+
+        reader.close();
+        fileReader.close();
 
         return builder.toString();
     }
